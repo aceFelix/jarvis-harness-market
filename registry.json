@@ -1,0 +1,42 @@
+{
+  "name": "jarvis-harness-market",
+  "description": "J.A.R.V.I.S 自定义 harness 市场 — 让 Jarvis 操控更多桌面软件",
+  "version": "1.0.0",
+  "harnesses": [
+    {
+      "id": "qq",
+      "display_name": "QQ",
+      "description": "通过 GUI 自动化控制 QQ 桌面客户端（发消息、读消息、搜索联系人、截图）",
+      "requires": "pyautogui, pywinauto",
+      "skill_md": "harnesses/qq/SKILL.md"
+    },
+    {
+      "id": "wechat",
+      "display_name": "微信",
+      "description": "通过 GUI 自动化控制微信桌面客户端（发消息、读消息、搜索联系人、传文件）",
+      "requires": "pyautogui, pywinauto",
+      "skill_md": "harnesses/wechat/SKILL.md"
+    },
+    {
+      "id": "firefox",
+      "display_name": "Firefox",
+      "description": "通过 Selenium WebDriver 控制 Firefox 浏览器（打开网页、点击、输入、截图、获取文本）",
+      "requires": "selenium, geckodriver",
+      "skill_md": "harnesses/firefox/SKILL.md"
+    },
+    {
+      "id": "wps",
+      "display_name": "WPS Office",
+      "description": "通过 COM 自动化控制 WPS Office（打开文档、编辑文本、保存、导出 PDF、新建表格）",
+      "requires": "pywin32",
+      "skill_md": "harnesses/wps/SKILL.md"
+    },
+    {
+      "id": "xmind",
+      "display_name": "Xmind",
+      "description": "通过文件操作控制 Xmind 思维导图（创建导图、添加节点、编辑节点、导出、打开）",
+      "requires": "",
+      "skill_md": "harnesses/xmind/SKILL.md"
+    }
+  ]
+}
