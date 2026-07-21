@@ -29,7 +29,8 @@
       "display_name": "WPS Office",
       "description": "通过 COM 自动化控制 WPS Office（打开文档、编辑文本、保存、导出 PDF、新建表格）",
       "requires": "pywin32",
-      "skill_md": "harnesses/wps/SKILL.md"
+      "skill_md": "harnesses/wps/SKILL.md",
+      "install_cmd": "pip install git+https://github.com/aceFelix/jarvis-harness-market.git#subdirectory=harnesses/wps"
     },
     {
       "id": "xmind",

@@ -1,0 +1,15 @@
+Metadata-Version: 2.4
+Name: jarvis-harness-wps
+Version: 1.0.0
+Summary: WPS Office COM 自动化 harness — 控制 WPS 文字/表格/演示
+Author: aceFelix
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: Microsoft :: Windows
+Classifier: Topic :: Office/Business
+Requires-Python: >=3.11
+Requires-Dist: pywin32; platform_system == "Windows"
+Dynamic: author
+Dynamic: classifier
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

@@ -1,0 +1,2 @@
+[console_scripts]
+jarvis-harness-wps = jarvis_harness_wps.cli:main

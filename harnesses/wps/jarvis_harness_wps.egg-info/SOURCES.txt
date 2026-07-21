@@ -1,0 +1,16 @@
+setup.py
+jarvis_harness_wps/__init__.py
+jarvis_harness_wps/__main__.py
+jarvis_harness_wps/cli.py
+jarvis_harness_wps.egg-info/PKG-INFO
+jarvis_harness_wps.egg-info/SOURCES.txt
+jarvis_harness_wps.egg-info/dependency_links.txt
+jarvis_harness_wps.egg-info/entry_points.txt
+jarvis_harness_wps.egg-info/requires.txt
+jarvis_harness_wps.egg-info/top_level.txt
+jarvis_harness_wps/core/__init__.py
+jarvis_harness_wps/core/presentation.py
+jarvis_harness_wps/core/spreadsheet.py
+jarvis_harness_wps/core/writer.py
+jarvis_harness_wps/utils/__init__.py
+jarvis_harness_wps/utils/wps_backend.py
