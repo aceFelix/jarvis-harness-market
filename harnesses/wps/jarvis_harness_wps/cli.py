@@ -23,6 +23,11 @@ import shlex
 import sys
 from typing import Any
 
+# Windows 控制台默认 GBK，JSON 含中文/emoji 时会 UnicodeEncodeError
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
+
 
 # ── 输出工具 ──────────────────────────────────────────────────────────
 

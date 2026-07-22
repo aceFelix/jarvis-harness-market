@@ -26,6 +26,11 @@ import os
 import sys
 from typing import Any
 
+# Windows 控制台默认 GBK，JSON 含中文/emoji 时会 UnicodeEncodeError
+if sys.platform == "win32":
+    sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
+
 
 # ── 输出工具 ──────────────────────────────────────────────────────────
 
@@ -109,7 +114,32 @@ def _do_list_nodes(args: argparse.Namespace) -> None:
     from jarvis_harness_xmind.utils.helpers import resolve_path, ensure_xmind_ext
 
     target = ensure_xmind_ext(resolve_path(args.target, args.workdir))
-    _output(list_nodes(target))
+    result = list_nodes(target)
+    # max_depth 限制输出深度
+    max_depth = getattr(args, "max_depth", 0)
+    if max_depth > 0 and "tree" in result:
+        result["tree"] = _truncate_tree(result["tree"], max_depth)
+    _output(result)
+
+
+def _truncate_tree(tree: str, max_depth: int) -> str:
+    """截断树形输出，只保留指定深度的节点。"""
+    lines = tree.split("\n")
+    kept: list[str] = []
+    for line in lines:
+        # 计算缩进深度：每 4 个空格（含 ├── 或 └──）算一级
+        stripped = line.lstrip()
+        if not stripped:
+            kept.append(line)
+            continue
+        indent_len = len(line) - len(stripped)
+        depth = indent_len // 4  # 每级缩进 4 字符
+        if depth <= max_depth:
+            kept.append(line)
+        elif depth == max_depth + 1 and kept and "├──" in kept[-1]:
+            # 在截断处加省略号
+            kept.append("    " * depth + "└── ...")
+    return "\n".join(kept)
 
 
 def _do_info(args: argparse.Namespace) -> None:
@@ -158,6 +188,8 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--output-path", default="", help="导出路径")
     parser.add_argument("--format", default="md", choices=["md", "markdown", "txt", "text", "tree"],
                         help="导出格式（默认 md）")
+    parser.add_argument("--max-depth", type=int, default=0,
+                        help="list_nodes/export 时限制输出深度（0=不限制，1=仅根节点，2=根+一级子节点...）")
     parser.add_argument("--harness-dir", default="", help="harness 所在目录")
     parser.add_argument("--workdir", default="", help="当前工作目录")
     parser.add_argument("--json", action="store_true", default=True, help="JSON 输出（默认开启）")

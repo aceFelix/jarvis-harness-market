@@ -36,6 +36,11 @@ args:
     required: false
     enum: [md, markdown, txt, text, tree]
     description: "导出格式（默认 md=Markdown，txt=纯文本树）"
+  - name: max_depth
+    type: integer
+    required: false
+    default: 0
+    description: "list_nodes/export 时限制输出深度（0=不限制，1=仅根节点，2=根+一级子节点...）。节点多时建议设 2-3 避免输出过长"
 examples:
   - "jarvis-harness-xmind --action create_map --text 项目计划 --target C:\\Users\\me\\plan.xmind"
   - "jarvis-harness-xmind --action add_node --target C:\\Users\\me\\plan.xmind --text 需求,设计,开发,测试"
