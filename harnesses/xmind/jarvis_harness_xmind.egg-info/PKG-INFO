@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: jarvis-harness-xmind
+Version: 1.0.0
+Summary: Xmind 思维导图文件操作 harness — 创建/编辑/导出/查看思维导图
+Author: aceFelix
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Office/Business
+Requires-Python: >=3.11
+Dynamic: author
+Dynamic: classifier
+Dynamic: requires-python
+Dynamic: summary

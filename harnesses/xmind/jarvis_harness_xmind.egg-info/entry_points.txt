@@ -1,0 +1,2 @@
+[console_scripts]
+jarvis-harness-xmind = jarvis_harness_xmind.cli:main

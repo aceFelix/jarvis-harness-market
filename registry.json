@@ -37,7 +37,8 @@
       "display_name": "Xmind",
       "description": "通过文件操作控制 Xmind 思维导图（创建导图、添加节点、编辑节点、导出、打开）",
       "requires": "",
-      "skill_md": "harnesses/xmind/SKILL.md"
+      "skill_md": "harnesses/xmind/SKILL.md",
+      "install_cmd": "pip install git+https://github.com/aceFelix/jarvis-harness-market.git#subdirectory=harnesses/xmind"
     }
   ]
 }

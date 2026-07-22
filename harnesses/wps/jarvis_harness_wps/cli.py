@@ -195,6 +195,7 @@ def _build_subcommand_parser() -> argparse.ArgumentParser:
     wp.add_argument("--mode", default="append", choices=["append", "insert", "replace"])
     wp.add_argument("--output-path", default="")
     wp.add_argument("--no-save", action="store_true")
+    wp.add_argument("--headless", action="store_true", help="不显示 WPS 窗口")
 
     # sheet
     sp = sub.add_parser("sheet", help="WPS 表格操作")
@@ -205,6 +206,7 @@ def _build_subcommand_parser() -> argparse.ArgumentParser:
     sp.add_argument("--data", default="")
     sp.add_argument("--sheet-name", default="")
     sp.add_argument("--output-path", default="")
+    sp.add_argument("--headless", action="store_true", help="不显示 WPS 窗口")
 
     # slide
     slp = sub.add_parser("slide", help="WPS 演示操作")
@@ -215,6 +217,7 @@ def _build_subcommand_parser() -> argparse.ArgumentParser:
     slp.add_argument("--text", default="")
     slp.add_argument("--layout", default="text", choices=["text", "blank"])
     slp.add_argument("--output-path", default="")
+    slp.add_argument("--headless", action="store_true", help="不显示 WPS 窗口")
 
     # status / version
     sub.add_parser("status", help="检测 WPS 进程与环境状态")
@@ -271,6 +274,7 @@ def main() -> None:
     top_parser.add_argument("--json", action="store_true", default=True, help="JSON 输出（默认开启）")
     top_parser.add_argument("--harness-dir", default="", help="harness 所在目录")
     top_parser.add_argument("--workdir", default="", help="当前工作目录")
+    top_parser.add_argument("--headless", action="store_true", default=False, help="不显示 WPS 窗口")
 
     top_args, remaining = top_parser.parse_known_args()
 
@@ -298,6 +302,9 @@ def main() -> None:
             inject.extend(["--workdir", top_args.workdir])
 
         args = parser.parse_args(inject + remaining)
+        # 把顶层 --headless 覆盖回子解析结果（子解析器 default 会覆盖主解析器的值）
+        if top_args.headless:
+            args.headless = True
         _dispatch(args)
 
 

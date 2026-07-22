@@ -19,7 +19,7 @@ args:
   - name: target
     type: string
     required: false
-    description: "文件路径 或 单元格地址（如 A1）"
+    description: "操作对象。仅用于: open_doc/open_sheet/open_presentation(文件路径), write_cell/read_cell/write_range(单元格地址如 A1)。save/export_pdf 不用此参数，用 output_path"
   - name: text
     type: string
     required: false
@@ -35,7 +35,7 @@ args:
   - name: output_path
     type: string
     required: false
-    description: "导出/保存路径"
+    description: "保存/导出路径。仅用于: save(保存文档), export_pdf(导出PDF)。不用此参数会弹出另存为对话框阻塞"
   - name: mode
     type: string
     required: false

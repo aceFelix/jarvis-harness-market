@@ -1,6 +1,109 @@
 ---
 name: Xmind
 id: xmind
+description: 通过文件操作控制 Xmind 思维导图（创建导图、添加节点、编辑节点、删除节点、导出 Markdown、打开导图）
+when_to_use: 用户需要创建或编辑 Xmind 思维导图、添加/修改/删除节点、导出导图或查看导图结构时
+trigger_words: [xmind, 思维导图, 脑图, 导图, 节点, mindmap]
+command: jarvis-harness-xmind
+args:
+  - name: action
+    type: string
+    required: true
+    enum: [create_map, add_node, edit_node, delete_node, export, open, list_nodes, info, version]
+    description: "操作类型：create_map=创建新导图, add_node=添加子节点(支持批量), edit_node=编辑节点文本, delete_node=删除节点, export=导出为Markdown/文本树, open=用默认应用打开, list_nodes=列出所有节点, info=获取导图信息, version=版本"
+  - name: target
+    type: string
+    required: false
+    description: "文件路径（.xmind 文件）。create_map 时为保存路径，其他操作为要操作的导图文件路径"
+  - name: text
+    type: string
+    required: false
+    description: "文本内容。create_map 时为导图标题，add_node 时为节点文字（逗号/分号分隔可批量添加），edit_node 时为新文本"
+  - name: parent
+    type: string
+    required: false
+    description: "父节点路径（add_node 用，格式: '根节点>子节点1'，默认添加到根节点下）"
+  - name: node-path
+    type: string
+    required: false
+    description: "节点路径（edit_node/delete_node 用，格式: '根节点>子节点1>子节点2'）"
+  - name: output-path
+    type: string
+    required: false
+    description: "导出路径（export 用，不指定则默认同目录同名 .md）"
+  - name: format
+    type: string
+    required: false
+    enum: [md, markdown, txt, text, tree]
+    description: "导出格式（默认 md=Markdown，txt=纯文本树）"
+examples:
+  - "jarvis-harness-xmind --action create_map --text 项目计划 --target C:\\Users\\me\\plan.xmind"
+  - "jarvis-harness-xmind --action add_node --target C:\\Users\\me\\plan.xmind --text 需求,设计,开发,测试"
+  - "jarvis-harness-xmind --action add_node --target plan.xmind --text 前端,后端 --parent 项目计划>设计"
+  - "jarvis-harness-xmind --action edit_node --target plan.xmind --node-path 项目计划>需求 --text 需求分析"
+  - "jarvis-harness-xmind --action delete_node --target plan.xmind --node-path 项目计划>测试"
+  - "jarvis-harness-xmind --action list_nodes --target C:\\Users\\me\\plan.xmind"
+  - "jarvis-harness-xmind --action export --target plan.xmind --output-path plan.md --format md"
+  - "jarvis-harness-xmind --action open --target C:\\Users\\me\\plan.xmind"
+---
+
+# Xmind Harness
+
+通过文件操作控制 Xmind 思维导图（.xmind 文件本质是 ZIP 包含 JSON），纯 Python 实现，无需启动 Xmind 应用。
+
+## 安装
+
+```bash
+pip install jarvis-harness-xmind
+```
+
+## 命令列表
+
+```
+jarvis-harness-xmind --action <action> [options]
+
+  create_map     创建新导图        --text <标题> --target <保存路径>
+  add_node       添加子节点        --target <文件> --text <节点文字> [--parent <父路径>]
+  edit_node      编辑节点文本      --target <文件> --node-path <节点路径> --text <新文字>
+  delete_node    删除节点          --target <文件> --node-path <节点路径>
+  export         导出为 MD/TXT    --target <文件> [--output-path <路径>] [--format md|txt]
+  open           用默认应用打开    --target <文件>
+  list_nodes     列出所有节点      --target <文件>
+  info           获取导图信息      --target <文件>
+  version        显示版本
+```
+
+## 节点路径格式
+
+用 `>` 或 `/` 分隔层级：
+- `项目计划>设计>前端` — 从根节点"项目计划"下的"设计"下的"前端"
+- `设计>前端` — 省略根节点，直接从子节点开始匹配
+
+## 批量添加节点
+
+`--text` 支持逗号、分号、换行分隔：
+```bash
+jarvis-harness-xmind --action add_node --target plan.xmind --text "需求,设计,开发,测试"
+```
+一次添加 4 个同级子节点。
+
+## 前置条件
+
+- **纯 Python 实现**，无外部依赖
+- 导出 PNG/PDF 需安装 Xmind 应用（本 harness 仅支持导出 Markdown/文本树）
+- `open` 操作需系统已安装 Xmind 应用
+
+## 技术原理
+
+.xmind 文件是 ZIP 压缩包，内结构：
+- `content.json` — 导图节点树（JSON 格式）
+- `metadata.json` — 元数据
+- `manifest.json` — 文件清单
+
+本 harness 直接操作 ZIP 内的 JSON 实现增删改查，无需启动 Xmind 应用。
+---
+name: Xmind
+id: xmind
 description: 通过文件操作控制 Xmind 思维导图（创建导图、添加节点、编辑节点、导出、打开）
 when_to_use: 用户需要创建或编辑 Xmind 思维导图、添加/修改节点、导出导图或打开已有导图时
 trigger_words: [xmind, 思维导图, 脑图, 导图, 节点]
