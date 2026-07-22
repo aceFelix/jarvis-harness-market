@@ -1,10 +1,10 @@
 # Jarvis Harness Market
 
-J.A.R.V.I.S 官方 harness 市场 — 让 Jarvis 操控更多桌面软件。
+J.A.R.V.I.S 官方自定义 harness 市场 — 让 Jarvis 操控更多桌面软件。
 
 ## 简介
 
-本仓库提供 J.A.R.V.I.S 的官方 harness 市场，用于控制 CLI-Anything 官方市场未覆盖的桌面软件。
+本仓库提供 J.A.R.V.I.S 官方 harness 市场，用于控制 CLI-Anything 官方市场未覆盖的桌面软件。
 
 每个 harness 是一个标准 Python 包，包含：
 - `SKILL.md` — harness 定义（能力描述、参数、触发场景）
