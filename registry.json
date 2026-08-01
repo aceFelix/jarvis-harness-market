@@ -39,6 +39,14 @@
       "requires": "",
       "skill_md": "harnesses/xmind/SKILL.md",
       "install_cmd": "pip install git+https://github.com/aceFelix/jarvis-harness-market.git#subdirectory=harnesses/xmind"
+    },
+    {
+      "id": "typora",
+      "display_name": "Typora",
+      "description": "控制 Typora Markdown 编辑器（打开/新建文档、读写 md 文件内容、列出文档、环境检测）",
+      "requires": "",
+      "skill_md": "harnesses/typora/SKILL.md",
+      "install_cmd": "pip install git+https://github.com/aceFelix/jarvis-harness-market.git#subdirectory=harnesses/typora"
     }
   ]
 }

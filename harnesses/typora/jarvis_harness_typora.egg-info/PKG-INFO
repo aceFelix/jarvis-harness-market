@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: jarvis-harness-typora
+Version: 1.0.0
+Summary: Typora Markdown 编辑器 harness — 打开/新建/读写 md 文档
+Author: aceFelix
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: OS Independent
+Classifier: Topic :: Text Processing :: Markup
+Requires-Python: >=3.11
+Dynamic: author
+Dynamic: classifier
+Dynamic: requires-python
+Dynamic: summary

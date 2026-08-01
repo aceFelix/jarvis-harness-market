@@ -21,6 +21,7 @@ J.A.R.V.I.S 官方自定义 harness 市场 — 让 Jarvis 操控更多桌面软�
 | wechat | 微信桌面版 | pywinauto + pyautogui | — | 框架 |
 | firefox | Firefox 浏览器 | Selenium WebDriver | — | 框架 |
 | xmind | Xmind 思维导图 | 文件操作 (.xmind=ZIP+JSON) | `jarvis-harness-xmind` | ✅ 可用 |
+| typora | Typora 编辑器 | 文件读写 + pyautogui/pywinauto | — | ✅ 可用 |
 
 ## 安装方式
 
@@ -33,7 +34,7 @@ J.A.R.V.I.S 官方自定义 harness 市场 — 让 Jarvis 操控更多桌面软�
 /cli_anything install qq      # 安装 QQ harness
 ```
 
-### pip 安装（对齐官方 CLI-Anything）
+### pip 安装（对齐 CLI-Anything 官方市场）
 
 ```bash
 # 从 GitHub 直接安装

@@ -1,0 +1,2 @@
+[console_scripts]
+jarvis-harness-typora = jarvis_harness_typora.cli:main
