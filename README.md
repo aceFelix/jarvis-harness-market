@@ -21,7 +21,7 @@ J.A.R.V.I.S 官方自定义 harness 市场 — 让 Jarvis 操控更多桌面软�
 | wechat | 微信桌面版 | pywinauto + pyautogui | — | 框架 |
 | firefox | Firefox 浏览器 | Selenium WebDriver | — | 框架 |
 | xmind | Xmind 思维导图 | 文件操作 (.xmind=ZIP+JSON) | `jarvis-harness-xmind` | ✅ 可用 |
-| typora | Typora 编辑器 | 文件读写 + pyautogui/pywinauto | — | ✅ 可用 |
+| typora | Typora 编辑器 | 文件读写 + 注册表定位 | `jarvis-harness-typora` | ✅ 可用 |
 
 ## 安装方式
 
@@ -151,6 +151,25 @@ jarvis-harness-<id> --subcommand "<component> --action <操作> [options]" --jso
   "install_cmd": "pip install git+https://github.com/aceFelix/jarvis-harness-market.git#subdirectory=harnesses/dingtalk"
 }
 ```
+
+## 测试
+
+市场发布前请运行轻量校验套件（纯静态，无需安装目标软件）：
+
+```bash
+pip install -r requirements-dev.txt
+pytest tests/ -v
+```
+
+覆盖范围：
+
+- **registry.json**：JSON 合法、id 唯一、`skill_md` 路径存在、`install_cmd` 与目录一致
+- **SKILL.md**：所有 harness 的 frontmatter 可解析且字段齐全
+- **pip 型 harness**（wps/xmind/typora）：全部 `.py` 编译通过、包可导入、CLI 入口存在
+
+> 真实 GUI 集成（实际操作 Typora/WPS/Xmind）需在装有对应软件的机器上手动验证，
+> 每个 harness 自带的 `info`/`action` 命令即可自测。
+> CI（[.github/workflows/ci.yml](./.github/workflows/ci.yml)）会在每次推送时自动运行上述校验。
 
 ## 许可证
 
