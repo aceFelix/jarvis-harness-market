@@ -1,16 +1,21 @@
 # Jarvis Harness Market
 
-J.A.R.V.I.S 官方自定义 harness 市场 — 让 Jarvis 操控更多桌面软件。
+jarvis 官方自定义 harness 市场 — 让 Jarvis 操控更多桌面软件。
 
 ## 简介
 
-本仓库提供 J.A.R.V.I.S 官方 harness 市场，用于控制 CLI-Anything 官方市场未覆盖的桌面软件。
+本仓库提供 jarvis 官方 harness 市场，用于控制 CLI-Anything 官方市场未覆盖的桌面软件。
 
 每个 harness 是一个标准 Python 包，包含：
 - `SKILL.md` — harness 定义（能力描述、参数、触发场景）
 - `setup.py` — pip 打包配置（console_scripts 入口）
 - `jarvis_harness_<id>/` — Python 包（cli.py 入口 + core/ 业务逻辑 + utils/ 工具层）
 - `run.py` — 向后兼容入口（支持目录复制安装方式）
+
+## 前置条件
+
+- 已安装 [jarvis](https://github.com/aceFelix/jarvis) 个人 AI 助手
+- Jarvis 运行正常（`jarvis` 或 `python -m agent.main`）
 
 ## 可用 Harness
 
@@ -25,10 +30,10 @@ J.A.R.V.I.S 官方自定义 harness 市场 — 让 Jarvis 操控更多桌面软�
 
 ## 安装方式
 
-### 通过 Jarvis 命令安装（推荐）
+### 通过 jarvis 命令安装（推荐）
 
 ```bash
-# 在 Jarvis REPL 中执行
+# 在 jarvis REPL 中执行
 /cli_anything market          # 查看可用 harness
 /cli_anything install wps     # 安装 WPS harness（自动 pip install + 迁移 SKILL.md）
 /cli_anything install qq      # 安装 QQ harness
