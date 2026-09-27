@@ -144,6 +144,14 @@ jarvis-harness-<id> --subcommand "<component> --action <操作> [options]" --jso
 {"status": "error", "action": "send_msg", "error": "..."}
 ```
 
+### SKILL.md 编写要求
+
+jarvis 只把 SKILL.md 的 **frontmatter**（description/when_to_use/args/examples）注入模型上下文，**正文对模型不可见**，因此：
+
+- 参数描述必须自包含：关键枚举/取值范围直接写进 `description`，禁止写「见命令树/见正文」（已有防回归测试断言）
+- `examples` 建议用工具调用的 JSON 参数格式（如 `{"subcommand": "writer", "action": "new_doc"}`），不要只写裸 CLI 字符串，避免模型模仿着把整串命令塞进单个参数
+- 位置参数（`positional: true`，如 subcommand）需在描述中声明只能传单个枚举值，禁止内嵌 `--help` 等 flag
+
 ### registry.json 条目格式
 
 ```json
@@ -169,7 +177,7 @@ pytest tests/ -v
 覆盖范围：
 
 - **registry.json**：JSON 合法、id 唯一、`skill_md` 路径存在、`install_cmd` 与目录一致
-- **SKILL.md**：所有 harness 的 frontmatter 可解析且字段齐全
+- **SKILL.md**：所有 harness 的 frontmatter 可解析且字段齐全；参数描述自包含（不含「见命令树/见正文」）
 - **pip 型 harness**（wps/xmind/typora）：全部 `.py` 编译通过、包可导入、CLI 入口存在
 
 > 真实 GUI 集成（实际操作 Typora/WPS/Xmind）需在装有对应软件的机器上手动验证，

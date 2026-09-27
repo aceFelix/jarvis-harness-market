@@ -68,6 +68,22 @@ def test_skill_md_args_valid(h: dict) -> None:
             assert arg.get(field), f"harness '{h['id']}' 的 arg 缺少字段: {field}"
 
 
+@pytest.mark.parametrize("h", _harnesses(), ids=lambda h: h["id"])
+def test_skill_md_arg_desc_self_contained(h: dict) -> None:
+    """参数描述必须自包含：jarvis 只把 frontmatter 注入模型上下文，
+    SKILL.md 正文对模型不可见，描述里写「见命令树/见正文」等于空头支票
+    （WPS harness 因此被模型反复用 --help 探索而卡死）。
+    """
+    skill_md = REPO_ROOT / h["skill_md"]
+    meta = _parse_frontmatter(skill_md)
+    for arg in meta.get("args", []):
+        desc = str(arg.get("description", ""))
+        assert "见命令树" not in desc and "见正文" not in desc, (
+            f"harness '{h['id']}' 的 arg '{arg.get('name')}' 描述引用了模型看不到的正文章节，"
+            "应把关键枚举/说明内联到 description"
+        )
+
+
 # ---------------------------------------------------------------------------
 # pip 型可用 harness：编译 + 导入冒烟
 # ---------------------------------------------------------------------------

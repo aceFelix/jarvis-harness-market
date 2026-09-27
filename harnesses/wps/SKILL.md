@@ -11,11 +11,11 @@ args:
     required: true
     positional: true
     enum: [writer, sheet, slide, status, version]
-    description: "子命令：writer=文字操作, sheet=表格操作, slide=演示操作, status=检测环境, version=版本"
+    description: "子命令（只能传单个枚举值，禁止内嵌空格或 --help 等 flag）：writer=文字操作, sheet=表格操作, slide=演示操作, status=检测环境, version=版本。查看可用动作请直接看 action 参数描述，不要调 --help"
   - name: action
     type: string
     required: false
-    description: "操作类型，各子命令不同（见命令树）"
+    description: "操作类型（writer/sheet/slide 必传，status/version 不传）。writer: open_doc/new_doc/edit_text/save/export_pdf/close/info; sheet: open_sheet/new_sheet/write_cell/read_cell/write_range/save/export_pdf; slide: open_presentation/new_presentation/add_slide/save/export_pdf/info"
   - name: target
     type: string
     required: false
@@ -60,11 +60,12 @@ args:
     default: true
     description: "是否添加 --json 标志输出结构化 JSON（推荐开启）"
 examples:
-  - "jarvis-harness-wps status"
-  - "jarvis-harness-wps writer --action open_doc --target C:\\Users\\me\\报告.docx"
-  - "jarvis-harness-wps sheet --action write_cell --target A1 --text 姓名"
-  - "jarvis-harness-wps writer --action export_pdf --output-path C:\\Users\\me\\报告.pdf"
-  - "jarvis-harness-wps slide --action add_slide --title 项目汇报 --text 第一页正文"
+  - "调用格式示例（JSON 参数）: {\"subcommand\": \"status\"}"
+  - "调用格式示例（JSON 参数）: {\"subcommand\": \"writer\", \"action\": \"new_doc\"}"
+  - "调用格式示例（JSON 参数）: {\"subcommand\": \"writer\", \"action\": \"open_doc\", \"target\": \"C:\\\\Users\\\\me\\\\报告.docx\"}"
+  - "调用格式示例（JSON 参数）: {\"subcommand\": \"writer\", \"action\": \"save\", \"output_path\": \"C:\\\\Users\\\\me\\\\报告.docx\"}"
+  - "调用格式示例（JSON 参数）: {\"subcommand\": \"sheet\", \"action\": \"write_cell\", \"target\": \"A1\", \"text\": \"姓名\"}"
+  - "调用格式示例（JSON 参数）: {\"subcommand\": \"slide\", \"action\": \"add_slide\", \"title\": \"项目汇报\", \"text\": \"第一页正文\"}"
 ---
 
 # WPS Office Harness
@@ -126,6 +127,8 @@ jarvis-harness-wps version         显示 harness 版本
 
 ## 注意事项
 
+- **Agent 调用时 subcommand 与 action 必须分开传**：subcommand 只放单个枚举值（如 `writer`），动作放在 action 参数里（如 `new_doc`）。把 `"writer --help"` 之类的整串命令塞进 subcommand 会被 argparse 拒绝
+- 命令行直接调用（人工调试）时才用 `jarvis-harness-wps writer --action <action>` 格式，见下方命令树
 - COM 操作需要 WPS 进程可被 COM 调用（默认支持）
 - 导出 PDF 需指定绝对路径
 - 批量写入的 data 参数必须是 JSON 二维数组
